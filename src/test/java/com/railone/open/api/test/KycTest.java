@@ -31,12 +31,12 @@ public class KycTest {
         String requestQueryStr = "";
 
         AccountKycReq req = new AccountKycReq();
-        req.setMail("acct011@railone.pro");
-        req.setAcctNo("acct011");
-        req.setAcctName("test acct011");
-        req.setFirstName("acct011");
+        req.setMail("sandbox01@railone.io");
+        req.setAcctNo("sandbox01");
+        req.setAcctName("test sandbox01");
+        req.setFirstName("sandbox01");
         req.setLastName("Wang");
-        req.setMobile("158217000011");
+        req.setMobile("159217000011");
         req.setGender("male");
         req.setBirthday("1990-01-01");
         req.setCity("moon");
@@ -53,7 +53,7 @@ public class KycTest {
         req.setAddress("street 1");
         req.setZipcode("123456");
         req.setMaidenName("mom");
-        req.setCardTypeId("70000001");
+        req.setCardTypeId("50000004");
 //        req.setPoa_doc(imgBase64);
 //        req.setMailVerificationCode("123456"); //optional
 //        req.setMailToken("123456");  //optional
