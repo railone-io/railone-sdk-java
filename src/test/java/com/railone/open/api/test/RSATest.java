@@ -1,5 +1,9 @@
 package com.railone.open.api.test;
 
+import com.github.ontio.account.Account;
+import com.github.ontio.common.Helper;
+import com.github.ontio.crypto.SignatureScheme;
+import com.github.ontio.sdk.manager.ECIES;
 import com.railone.open.api.dto.CardInfoReq;
 import com.railone.open.api.util.Base64Utils;
 import com.railone.open.api.util.HttpUtil;
@@ -26,7 +30,16 @@ public class RSATest {
     public void setUp() throws Exception {
         HttpUtil.init(host,apiKey,apiSecret,apiPassphrase);
     }
-
+    @Test
+    public void eciesTest() throws Exception {
+        Account account = new Account(SignatureScheme.SHA256WITHECDSA);
+        System.out.println("privatekey:"+Helper.toHexString(account.serializePrivateKey()));
+        System.out.println("publickey:"+Helper.toHexString(account.serializePublicKey()));
+        String msg = "12345678";
+        String[] endata = ECIES.Encrypt(Helper.toHexString(account.serializePublicKey()),msg.getBytes());
+        byte[] dedata = ECIES.Decrypt(Helper.toHexString(account.serializePrivateKey()),endata);
+        System.out.println(new String(dedata));
+    }
     @Test
     public void rsaTest() throws Exception {
 
