@@ -143,7 +143,7 @@ public class AccountKycReq {
      */
     private String kycInfo;
 
-    private String poa_doc;
+    private String[] poa_doc;
 
     /**
      * 邮箱验证码
@@ -580,11 +580,11 @@ public class AccountKycReq {
     }
 
 
-    public String getPoa_doc() {
+    public String[] getPoa_doc() {
         return poa_doc;
     }
-    public void setPoa_doc(String poa_doc) {
-        this.poa_doc = poa_doc == null ? null : poa_doc.trim();
+    public void setPoa_doc(String[] poa_doc) {
+        this.poa_doc = poa_doc;
     }
 
     public String getMailVerificationCode() {

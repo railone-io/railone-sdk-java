@@ -54,7 +54,7 @@ public class KycTest {
         req.setZipcode("123456");
         req.setMaidenName("mom");
         req.setCardTypeId("50000004");
-//        req.setPoa_doc(imgBase64);
+        req.setPoa_doc(new String[]{imgBase64});
 //        req.setMailVerificationCode("123456"); //optional
 //        req.setMailToken("123456");  //optional
        HttpUtil.post(requestPath,requestQueryStr, JSON.toJSONString(req));
