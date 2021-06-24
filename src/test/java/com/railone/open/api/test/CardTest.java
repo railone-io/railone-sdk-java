@@ -74,4 +74,11 @@ public class CardTest {
         HttpUtil.put(requestPath,requestQueryStr,req.toString());
     }
 
+    @Test
+    public void getTrackingNumberTest() throws Exception {
+        String requestPath = "/api/v1/debit-cards/trackingnumber";
+        String requestQueryStr = "month_year=202106";
+        requestQueryStr = "acct_no=acct04&card_no=4366520800000050100";
+        HttpUtil.get(requestPath,requestQueryStr);
+    }
 }
