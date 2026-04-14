@@ -98,13 +98,13 @@ public class BankTest {
         String requestPath = "/api/v1/bank/virtualcard";
         String requestQueryStr = "";
         CardInfoReq req = new CardInfoReq();
-        req.setCard_no("4334094500000041101");
+        req.setCard_no("4389229720000052395");
         req.setPublickey(publicKey);
         HttpUtil.post(requestPath,requestQueryStr,req.toString());
         System.out.println();
 
 
-        String endata = "Wr/Y/DF0xI0HcZUMYD+oU7eZjDLZN98xGmWV6p6+/awOmjo/26la815ThimYWG+PgZN3dK4iVcw71j/FUlJLygrp/tW0BVTdBjkH7Vr5jWQkRC9NQLKa378OBweFX0UPUz6c3uBs8fwXhH+2hU9PrHmCz9GIqiueMj+tLVPZRKo=";
+        String endata = "bn1lKiT/hyVhbxqrBDZdsnQ2oIq5joB1NRDEKVCHOKP9/4YuFu83s09SnymaqiPosgSSyngwm20EjiVGIM8HeS7hm3UufC3sfgPo8PFevwV6YB5LoaPRe+sJwmqCX5/oqO81y01UbJdpTq9doHsSOzjU2NRDSJ0MeuenMxABZqNq+Ms6vWcz5rCVDMj7PmVQc/i7jHjg+XZRVDYl/q3hjSDfA/Lt0YPvWrbcKv7FhHpS9PtbPRZNAmuK1rjAP+moeDC/NuM8RtSTItwiq4jDmHdZH8IHQ30CZFKtJ9Yc0I1F4e88xMJ5uTNfStvYl3N6aq9EKLCGXOrUbED29T7WOwkJ0dLmU86hD9Hc+ndV+0jlzN65lxoMed6I/tvhs7WVEw/+PG63j0dFkL72L6qWrxrQ9PJ8ehmhsCGBa/0itoHl9exasEuzpMVTp9J4D0JKegkZqnMTs/P57WV7eCVeGHAa7ZzwRZ451HrA2FMH/s7yTOYrZGQnlB3XFsq4Fx7nXVba+V3BVwjiyjtAO+Gz/DHuVYnhJtcpm9aPk6Ju68PRlSbGre1ilZq2PKwW3mjG1HfLW5KrlJJ5eZkAmrpe5b5+usGxi+1sqdesomr2auBuaQ+qXhOSXupWlxKuA2Iyk20TA5NVGLs+0iGMILRYo2kD3d6HcyWKF/it9D9TLd4=";
         String rspContent = new String(RsaUtils.decryptByPrivateKey(Base64Utils.decode(endata), privateKey));
         System.out.println(rspContent);
     }
