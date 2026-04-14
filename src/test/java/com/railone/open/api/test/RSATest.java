@@ -62,14 +62,14 @@ public class RSATest {
         String privateKey= "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAIO3Fz7DcuWG0XcNxuBLzOq+Nizxn6zTcOu1tBvyKKB4wBsqNctutZnBfoimuZVFqd0u4zc9XdRTsvhIJ0lkFFSOAR7SrcX+RR7VfAWGyXhqhb0Ucor9396bnSodItfD8o9fYfJn0TL0b9tXo7Ale+RRh9K0GMc2A+XAVxrXtCG5AgMBAAECgYAi/YadU8q4EuKeX/iPKVPcoH8/3Uhv3xPGalTYf7IvPyS5krMLwfNYT0DQCIqQjxsa+RO/XvwIJdwLfQ+CvaVwlr44f7ytmFAiKlWGGy7xIrfAVzyxZiEVJMLpiBxwhPjAm0Z1IpuQygXxfMJ1ZVD3vltwt5yWGE6cCaqvU8kR6QJBAM3LTkrEm9xVxTCj3fQzI+qk4kwLZREDb/AnZ9rJKFmgAD5JmCl/M8PJty/ucXcKQuXU3a6zGZsRNLLWlSjlbe8CQQCj2T+Ezjx/i7yns5fugJ87MlvuD1NKUFdo94EaxF6cF5n7BmhI9LFhqXi5KaQVuITB6DMsyQYkCiABq1OBVhLXAkAw7FAkfjD/ZHSIZ6xwTWgQdDpIEb1pGgQWd4e8/21UQTFNnXlLBC5uMRoXjvvybMISmVRKH9HKh4Cbs1+qZUCJAkEAihSFgShEt8BNZo7lVSu0BTE1Y/QqXxBB+cXLWYFvsd/59iC6NfFwozss7+51x5BO4RMMPYvTzv9xZba6kt601QJBAJ6A5/YzzPU9Aeiy43dL59GHYrPG8NHatUcY2GiMuvrXREWzde/s261EIK3+6etVTQuqJkmighNCDsACxcBZn1U=";
 
         String requestPath = "/api/v1/bank/virtualcard";
-        String requestQueryStr = "card_no=4334094500000041101";
+        String requestQueryStr = "";
         CardInfoReq req = new CardInfoReq();
-        req.setCard_no("4334094500000041101");
+        req.setCard_no("4389229720000052395");
         req.setPublickey(publicKey);
         HttpUtil.post(requestPath,requestQueryStr,req.toString());
 
 
-        String endata = "IljYkMeAN1wBMcfreEUuJ+26haMcm8UIVNeXkY8WKKbvjBi1EoJhycMoebKTyekEO5R3JN0QePZxZkh6KSioz5gykMJ9exCIaZ4nQEkD5p1g4VWGcBkYfV2axgxUzuoyHW7r5myrHpGROmiiqPnzqm9Aj5e46j29pMxJWCQP44E=";
+        String endata = "RtCymCstsdJEhCFf6BNqBqnwPiUPK+JsX3eBx2tBFTVbsKE1A0yS5Tr70q19t1TbPcmFkYDEdD2U1bvzoI3wFC+RuB2/qWRJyFxwnsNp6kOHrPHYTJcK1wlr0KFWdqqAPSjtDWNZdNoY8VmjcSRRmyzNhv7NmKhTS36p3QEiOZ0w1Q+OgWDKO+twShnehwg3HX4bvfsWawIJYYwIIjt+9A7pg92j5FKAAwad/u7NZQHo7RapGjK+eebRdbQQTHw8EK3GDAG5ydRn6O2bZTE/2YMj2VbBAFJX5APLMxLcXA9ADtwYoo8qgd+tpFSIIYUuoXBo8GC7UjP2vgTRrk3Q5ihan/rHQU7L2EL6Q1f7oTKMkngjKhQckf2BJt/c/g4Qj8FzhgonvVeQDJzguaZP8T/Rxqgrqhx2AHzFXWu/6DOMKRAvGlmAqUSn/No9jUMEdK0IUe52lou/sxJUrLia4bzc36kOYCGQKqqtAlrN0eKeDK3k9K9y7uNWZXcdO4IdZzVWCJ+YHHVFYJ+YxIWVtoW3U6+r74ebPEB8pyORWGTdHUXtThqZQoYxR4SDcTmVOf4lYE4mghZyuBpk/PJjuPGFtlZGSn2b/o9ksqyd3cHJeQvqzMW0W6taMsBYFVEEU2Q2WVW7YbOTfPberIdXmXx8VdVRRZf7kyvIc196t5o=";
         String rspContent = new String(RsaUtils.decryptByPrivateKey(Base64Utils.decode(endata), privateKey));
         System.out.println(rspContent);
     }

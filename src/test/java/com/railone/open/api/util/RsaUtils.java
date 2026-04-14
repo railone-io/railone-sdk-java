@@ -37,7 +37,7 @@ public class RsaUtils {
   private static final int MAX_DECRYPT_BLOCK = 128;
 
   /**
-   * 私钥解密
+   * 私钥解密（支持分段解密，自动适配密钥长度）
    *
    * @param encryptedData 已加密数据
    * @param privateKey 私钥(BASE64编码)
@@ -48,23 +48,21 @@ public class RsaUtils {
       byte[] keyBytes = Base64Utils.decode(privateKey);
       PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
       KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-      Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
-      Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+      RSAPrivateKey privateK = (RSAPrivateKey) keyFactory.generatePrivate(pkcs8KeySpec);
+      Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
       cipher.init(Cipher.DECRYPT_MODE, privateK);
+      int keyLength = privateK.getModulus().bitLength() / 8;
       int inputLen = encryptedData.length;
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       int offSet = 0;
       byte[] cache;
       int i = 0;
       while (inputLen - offSet > 0) {
-        if (inputLen - offSet > MAX_DECRYPT_BLOCK) {
-          cache = cipher.doFinal(encryptedData, offSet, MAX_DECRYPT_BLOCK);
-        } else {
-          cache = cipher.doFinal(encryptedData, offSet, inputLen - offSet);
-        }
+        int len = Math.min(keyLength, inputLen - offSet);
+        cache = cipher.doFinal(encryptedData, offSet, len);
         out.write(cache, 0, cache.length);
         i++;
-        offSet = i * MAX_DECRYPT_BLOCK;
+        offSet = i * keyLength;
       }
       byte[] decryptedData = out.toByteArray();
       out.close();
@@ -75,7 +73,7 @@ public class RsaUtils {
     }
   }
   /**
-   * 公钥加密
+   * 公钥加密（支持分段加密，自动适配密钥长度）
    *
    * @param data 源数据
    * @param publicKey 公钥(BASE64编码)
@@ -86,10 +84,12 @@ public class RsaUtils {
       byte[] keyBytes = Base64Utils.decode(publicKey);
       X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes);
       KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-      Key publicK = keyFactory.generatePublic(x509KeySpec);
+      RSAPublicKey publicK = (RSAPublicKey) keyFactory.generatePublic(x509KeySpec);
       // 对数据加密
-      Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+      Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
       cipher.init(Cipher.ENCRYPT_MODE, publicK);
+      int keyLength = publicK.getModulus().bitLength() / 8;
+      int maxEncryptBlock = keyLength - 11; // PKCS#1 padding 占 11 字节
       int inputLen = data.length;
       ByteArrayOutputStream out = new ByteArrayOutputStream();
       int offSet = 0;
@@ -97,14 +97,11 @@ public class RsaUtils {
       int i = 0;
       // 对数据分段加密
       while (inputLen - offSet > 0) {
-        if (inputLen - offSet > MAX_ENCRYPT_BLOCK) {
-          cache = cipher.doFinal(data, offSet, MAX_ENCRYPT_BLOCK);
-        } else {
-          cache = cipher.doFinal(data, offSet, inputLen - offSet);
-        }
+        int len = Math.min(maxEncryptBlock, inputLen - offSet);
+        cache = cipher.doFinal(data, offSet, len);
         out.write(cache, 0, cache.length);
         i++;
-        offSet = i * MAX_ENCRYPT_BLOCK;
+        offSet = i * maxEncryptBlock;
       }
       byte[] encryptedData = out.toByteArray();
       out.close();
